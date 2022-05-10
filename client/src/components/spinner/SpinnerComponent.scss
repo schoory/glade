@@ -1,0 +1,47 @@
+
+@import '../../index.scss';
+
+.spinner {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+
+  & > svg:first-child {
+    fill: $green;
+    animation: animate 2s linear infinite;
+  }
+
+  & > p {
+    font-size: 46px;
+    font-weight: 600;    
+    color: $black;
+  }
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    &_fullscreen {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+}
+
+@keyframes animate
+{
+  0%
+  {
+    transform:rotate(0deg);
+  }
+  100%
+  {
+    transform:rotate(360deg);
+  }
+}

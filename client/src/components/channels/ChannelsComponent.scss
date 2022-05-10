@@ -1,0 +1,235 @@
+@import '../../index.scss';
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  &__wrapper {
+    padding: 20px 30px;
+    border-radius: 15px 0 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 103px - 74px - 40px - 32px);
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > p {
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 400;
+      color: $black;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    gap: 2px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      & > button {
+        width: 100%;
+      }
+    }
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: transparent;
+    border-radius: 0;
+    border: none;
+    font-family: 'Inter';
+    text-align: start;
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &-unreaded {
+      width: 30px;
+      background: $red;
+      border-radius: 5px;
+      text-align: center;
+      padding: 2px 0px;
+      overflow: hidden;
+      & > p {
+        font-size: 12px;
+        font-weight: 500;
+        color: $white;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    & > * {
+      outline: none;
+    }
+
+    &:focus {
+      background: transparent;
+      outline: none;
+    }
+
+    &_active {
+      .channels__item-hashtag > svg, .channels__item-name {
+        fill: $green;
+        stroke: $green;
+        color: $green;
+        font-weight: 500;
+      }
+    }
+
+    &-channel {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: calc(100% - 32px);
+    }
+
+    &-control {
+      width: 20px !important;
+      height: 20px !important;
+    }
+
+    &-hashtag {
+      flex: none;
+      width: 16px;
+      height: 16px;
+
+      & > svg {
+        transition: fill .1s ease-out;
+        fill: $dark_gray;
+        stroke: $dark_gray;
+      }
+    }
+
+    &-name {
+      font-size: 18px;
+      font-weight: 500;
+      color: $black;
+      transition: color .1s ease-out;
+      width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    &-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+
+      & .gladeavatar__status {
+        border: 2px solid $white;
+      }
+
+      &-name {
+        font-size: 16px;
+        font-weight: 500;
+        color: $black;
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      &-controls {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        & > svg {
+          width: 15px;
+          height: 15px;
+          & > path {
+            fill: $dark_gray;
+          }
+        }
+      }
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0px 15px;
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &[data-wrapped=true] {
+      .channels__section-list {
+        height: 0px;
+      }
+    }
+
+    &-name {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5px;
+
+      & > p { 
+        font-size: 18px;
+        font-weight: 500;
+        color: $light_black;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      & > p:first-child {
+        flex-grow: 1;
+      }
+
+      &::after {
+        position: absolute;
+        content: '';
+        height: 2px;
+        width: 100%;
+        background: $dark_white;
+        border-radius: 2px;
+        top: calc(100% + 5px);
+        left: 0;
+      }
+    }
+
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 100%;
+      overflow: hidden;
+      transition: all .1s ease-out;
+      height: 100%;
+
+      & > button, & > div > button {
+        width: 100%;
+      }
+    }
+  }
+}

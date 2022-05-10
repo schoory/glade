@@ -1,0 +1,15 @@
+{
+  "appPort": 5000,
+  "DBHost": "localhost",
+  "DBPort": 5432,
+  "DBName": "glade",
+  "DBUser": "postgres",
+  "DBPassword": "1234",
+  "jwtSecretString": "GladeSecretJWTString",
+  "staticPath": "static/",
+  "avatarPath": "static/i/",
+  "userPath": "static/u/",
+  "channelsPath": "static/ch/",
+  "audioMessagesPath": "a/",
+  "channelFilesPath": "f/"
+}

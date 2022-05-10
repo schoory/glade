@@ -1,0 +1,180 @@
+
+@import '../../index.scss';
+
+.workplace {
+  display: grid;
+  grid-template-areas: 
+    'logo history'
+    'channels history'
+    'account history';
+  grid-template-columns: 350px 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  background: $dark_ligter_white;
+
+  &__logo {
+    grid-area: logo;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    height: fit-content;
+    padding: 30px 20px 30px 30px;
+    background: $white;
+    // box-shadow: 0px 0px 2px 2px rgba(171, 176, 182, 0.1);
+
+    & > p {
+      font-size: 32px;
+      font-weight: 600;
+      color: $green;
+    }
+
+    & > svg {
+      width: 32px;
+      height: 32px;
+      fill: $green;
+    }
+  }
+
+  &__channels {
+    grid-area: channels;
+    padding-left: 0px;
+    background: $white;
+    height: 100%;
+
+    .channels__list {
+      padding-left: 10px;
+    }
+  }
+
+  &__account {
+    grid-area: account;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: $dark_white;
+
+    & .gladeavatar__status {
+      border: 2px solid $dark_white;
+    }
+
+    &-name {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      color: $black;
+      width: 100%;
+
+      & > p {
+        text-overflow: ellipsis;
+      }
+    }
+
+    &-controls {
+      display: flex;
+      gap: 5px;
+      & > .btn-icon[data-mute=true] {
+        & > svg > path {
+          fill: $red;
+        }
+
+        &:hover {
+          & > svg > path {
+            fill: $dark_red;
+          }
+        }
+      }
+    }
+  }
+
+  &__history {
+    grid-area: history;
+    background: $dark_ligter_white;
+  }
+
+  &__settings {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__spinner {
+    background: $dark_ligter_white;
+    border-right: 1px solid $dark_white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.history {
+  position: absolute;
+  left: 350px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  background: $dark_ligter_white;
+  width: calc(100vw - 350px);
+  height: 100%;
+  transition: all .2s ease-out;
+}
+
+.gladechannel {
+  &__userlist {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 15px;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    &-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+    }
+
+    &-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: $black;
+    }
+
+    &-groupname {
+      font-size: 18px;
+      font-weight: 500;
+      color: $light_black;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .workplace {
+    position: relative;
+    grid-template-areas: 
+    'logo'
+    'channels'
+    'account';
+    grid-template-columns: minmax(200px, 1fr);
+    grid-template-rows: auto 1fr auto;
+    width: 100vw;
+  }
+
+  .history {
+    left: 95vw;
+    top: 0px;
+    width: calc(100vw - 95vw);
+
+    &[data-toggle=true] {
+      left: 0vw;
+      width: 100vw;
+    }
+  }
+}

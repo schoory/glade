@@ -1,0 +1,266 @@
+
+@import '../../index.scss';
+
+.tabs {
+  display: grid;
+  grid-template-areas: 
+    'menu tab';
+  grid-template-columns: .7fr 1.3fr;
+  height: 100%;
+  width: 100%;
+  background: $white;
+
+  &__menu {
+    grid-area: menu;
+    padding: 10vh 25px 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+
+    &-item {
+      padding: 10px 15px;
+      border-radius: 5px;
+      width: 200px;
+      cursor: pointer;
+      transition: all .15s ease-out;
+      border: none;
+      background: transparent;
+      font-size: 17px;
+      font-weight: 500;
+      text-align: left;
+
+      &:hover {
+        box-shadow: 0px 0px 2px 2px rgba(171, 176, 182, 0.1);
+      }
+
+      &:focus {
+        box-shadow: 0px 0px 0px 2px $green;
+        outline: none;
+      }
+
+      &_active {
+        background: $green;
+        color: $white;
+        pointer-events: none;
+      }
+    }
+
+    &-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: $dark_gray;
+      width: 200px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  &__tab {
+    padding: 10vh 30px 20px 30px;
+    grid-area: tab;
+    background: $dark_ligter_white;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &-title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    &-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      width: 550px;
+    }
+
+    &-groups {
+      display: flex;
+      max-height: 300px;
+      overflow: hidden;
+    }
+
+    &-groups-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 15px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-right: 1px solid $gray;
+    }
+
+    &-groups-added {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 15px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    &-groups-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s ease-out;
+
+      & > p {
+        font-size: 18px;
+        width: 225px;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      &:hover {
+        background: $dark_white;
+      }
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 0px;
+    right: -30px;
+    transform: translateX(100%);
+    gap: 15px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .tabs {
+    grid-template-columns: 250px 1fr;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .tabs {
+    grid-template-columns: 250px minmax(400px, 1fr);
+
+    &__menu {
+      &-item {
+        width: 200px;
+      }
+      &-controls {  
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 45px;
+        width: 200px;
+      }
+      &-title {
+        width: 200px;
+      }
+    }
+
+    &__tab {
+      &-groups {
+        flex-direction: column;
+        max-height: 500px;
+      }
+  
+      &-groups-list {
+        border-right: none;
+        border-bottom: 1px solid $gray;
+      }
+
+      &-groups-item {
+        & > button {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .tabs {
+    display: block;
+
+    &__menu {
+      position: relative;
+      padding: 30px 15px 0px 15px;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+
+      &-item {
+        font-size: 28px;
+        width: 100%;
+
+        &_active {
+          pointer-events: all;
+          background: #fff;
+          color: $black;
+        }
+      }
+
+      &-controls {
+        position: fixed;
+        left: 100%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        flex-direction: row;
+
+        .btn-icon {
+          width: 64px;
+          height: 64px;
+          border-radius: 100%;
+          border: 3px solid $blue;
+
+          & > svg {
+            width: 36px;
+            height: 36px;
+            
+            & > path {
+              fill: $dark_blue;
+            }
+          }
+        }
+      }
+
+      &-title {
+        width: auto;
+        padding: 0px 15px;
+        max-width: 100%;
+      }
+    }
+
+    &__tab {
+      flex-direction: column;
+      gap: 30px;
+      height: 100%;
+      padding: 30px 15px 30px 15px;
+
+      &-wrapper {
+        width: 100%;
+      }
+
+      &-groups-list {
+        padding: 15px 0;
+      }
+
+      &-groups-added {
+        padding: 15px 0;
+      }
+
+      &-groups-item > p {
+        width: 200px;
+      }
+    }
+  }
+}

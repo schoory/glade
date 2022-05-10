@@ -1,0 +1,107 @@
+
+@import '../../index.scss';
+
+.gladeexpired {
+  width: 100%;
+  height: 100%;
+  background: $dark_ligter_white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__wrapper {
+    width: 750px;
+    background: $white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 2px rgba(171, 176, 182, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 30px 50px 30px;
+  }
+
+  &__content-header {
+    width: 100%;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 400;
+    color: $black;
+  }
+
+  &__hints {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 20px;
+  }
+
+  &__hint {
+    font-size: 16px;
+    font-weight: 500;
+    color: $light_black;
+    line-height: 25px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    height: fit-content;
+    background: $green;
+    padding: 10px 30px;
+    border-radius: 10px 10px 0px 0px;
+
+    & > p {
+      font-size: 32px;
+      font-weight: 600;
+      color: $white;
+    }
+
+    & > svg {
+      width: 32px;
+      height: 32px;
+      fill: $white;
+    }
+  }
+}
+
+@media screen and (max-height: 850px) {
+  .gladeexpired {
+    &__wrapper {
+      height: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .gladeexpired {
+    &__wrapper {
+      border-radius: 0;
+      height: 100%;
+      width: 100%;
+    }
+    &__header {
+      border-radius: 0;
+    }
+  }
+}

@@ -1,0 +1,101 @@
+
+@import '../../index.scss';
+
+.list {
+  display: grid;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    & > input {
+      width: 100%;
+      &::placeholder {
+        color: $gray;
+      }
+    }
+
+    & > button {
+      flex: none;
+      height: 46px;
+    }
+  }
+
+  &__title {
+    & > p {
+      font-size: 16px;
+      font-weight: 500;
+      color: $dark_gray;
+    }
+  }
+
+  &__empty {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  &__item {
+    padding: 15px;
+    cursor: pointer;
+    transition: all .15s ease-out;
+    border-radius: 5px;
+    align-items: center;
+
+    &:hover {
+      background: $dark_white;
+    }
+
+    &-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 100%;
+    }
+    
+    &-name {
+      font-size: 20px;
+      font-weight: 500;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    &-quantity {
+      font-size: 16px;
+      font-weight: 500;
+      color: $dark_gray;
+    }
+
+    &-color {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      &-preview {
+        flex: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .list {
+    &__item {
+
+      &-quantity {
+        text-align: center;
+      }
+
+      &-controls {
+        justify-self: end;
+      }
+    }
+  }
+}

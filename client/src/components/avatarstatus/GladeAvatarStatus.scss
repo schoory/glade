@@ -1,0 +1,49 @@
+
+@import '../../index.scss';
+
+.gladeavatar {
+  position: relative;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+
+  &__image {
+    border-radius: 100%;
+  }
+
+  &__status {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(25%) translateX(25%);
+    border-radius: 100%;
+    transition: border .2s ease-out;
+    
+    &_offline {
+      background: $light_black;
+    }
+    &_online {
+      background: $green;
+    }
+    &_inactive {
+      background: $orange;
+    }
+    &_notdisturb {
+      background: $dark_red;
+    }
+    &_weekend {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: $white;
+      & > svg {
+        width: 12px;
+        height: 12px;
+      }
+      & > svg > path {
+        fill: $light_orange;
+      }
+    }
+  }
+}
