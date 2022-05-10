@@ -1,0 +1,747 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.2
+-- Dumped by pg_dump version 14.2
+
+-- Started on 2022-05-09 17:46:59
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE glade;
+--
+-- TOC entry 3403 (class 1262 OID 16394)
+-- Name: glade; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE glade WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'Russian_Russia.1251';
+
+
+ALTER DATABASE glade OWNER TO postgres;
+
+\connect glade
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 220 (class 1259 OID 16498)
+-- Name: channel_types; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.channel_types (
+    id integer NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.channel_types OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16497)
+-- Name: channel_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.channel_types_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.channel_types_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3405 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: channel_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.channel_types_id_seq OWNED BY public.channel_types.id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 16460)
+-- Name: channels; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.channels (
+    id bigint NOT NULL,
+    visibility_id integer NOT NULL,
+    channel_type_id integer NOT NULL,
+    name character varying(64),
+    group_ids bigint[],
+    section_id bigint
+);
+
+
+ALTER TABLE public.channels OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 16459)
+-- Name: channels_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.channels_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.channels_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3406 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: channels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.channels_id_seq OWNED BY public.channels.id;
+
+
+--
+-- TOC entry 212 (class 1259 OID 16422)
+-- Name: groups; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.groups (
+    id bigint NOT NULL,
+    name character varying(32) NOT NULL,
+    color character varying(12),
+    role_id integer
+);
+
+
+ALTER TABLE public.groups OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 16421)
+-- Name: group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.group_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3407 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.group_id_seq OWNED BY public.groups.id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 16567)
+-- Name: messages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.messages (
+    id bigint NOT NULL,
+    text text,
+    index bigint NOT NULL,
+    channel_id bigint,
+    deleted boolean DEFAULT false NOT NULL,
+    delivered boolean DEFAULT true NOT NULL,
+    readed boolean DEFAULT false NOT NULL,
+    user_id bigint NOT NULL,
+    creation_date timestamp with time zone NOT NULL,
+    edited boolean DEFAULT false NOT NULL,
+    reply_to bigint,
+    attachments jsonb
+);
+
+
+ALTER TABLE public.messages OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 16431)
+-- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.roles (
+    id integer NOT NULL,
+    name character varying(64) NOT NULL
+);
+
+
+ALTER TABLE public.roles OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 16430)
+-- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.roles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.roles_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3408 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
+
+
+--
+-- TOC entry 222 (class 1259 OID 16595)
+-- Name: sections; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sections (
+    id bigint NOT NULL,
+    name text NOT NULL,
+    "position" integer
+);
+
+
+ALTER TABLE public.sections OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 16608)
+-- Name: statuses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.statuses (
+    id bigint NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.statuses OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 16607)
+-- Name: statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.statuses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.statuses_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3409 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.statuses_id_seq OWNED BY public.statuses.id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 16411)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    privacy text DEFAULT 'allowemail, allowbirthdate, allowphone'::text NOT NULL,
+    birth_date date,
+    group_id bigint,
+    role_id integer NOT NULL,
+    password_expired boolean DEFAULT true NOT NULL,
+    email character varying(32),
+    password character varying(128) NOT NULL,
+    first_name character varying(32) NOT NULL,
+    last_name character varying(32) NOT NULL,
+    phone character varying(16),
+    refresh_token text,
+    avatar text,
+    login character varying(64),
+    status_id bigint DEFAULT 1
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16410)
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3410 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- TOC entry 218 (class 1259 OID 16469)
+-- Name: visibility; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.visibility (
+    id integer NOT NULL,
+    name text NOT NULL,
+    color character varying(12)
+);
+
+
+ALTER TABLE public.visibility OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16468)
+-- Name: visibility_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.visibility_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.visibility_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3411 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: visibility_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.visibility_id_seq OWNED BY public.visibility.id;
+
+
+--
+-- TOC entry 3210 (class 2604 OID 16501)
+-- Name: channel_types id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.channel_types ALTER COLUMN id SET DEFAULT nextval('public.channel_types_id_seq'::regclass);
+
+
+--
+-- TOC entry 3208 (class 2604 OID 16511)
+-- Name: channels id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.channels ALTER COLUMN id SET DEFAULT nextval('public.channels_id_seq'::regclass);
+
+
+--
+-- TOC entry 3206 (class 2604 OID 16525)
+-- Name: groups id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.groups ALTER COLUMN id SET DEFAULT nextval('public.group_id_seq'::regclass);
+
+
+--
+-- TOC entry 3207 (class 2604 OID 16434)
+-- Name: roles id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_id_seq'::regclass);
+
+
+--
+-- TOC entry 3215 (class 2604 OID 16611)
+-- Name: statuses id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.statuses ALTER COLUMN id SET DEFAULT nextval('public.statuses_id_seq'::regclass);
+
+
+--
+-- TOC entry 3204 (class 2604 OID 16558)
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- TOC entry 3209 (class 2604 OID 16472)
+-- Name: visibility id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visibility ALTER COLUMN id SET DEFAULT nextval('public.visibility_id_seq'::regclass);
+
+
+--
+-- TOC entry 3393 (class 0 OID 16498)
+-- Dependencies: 220
+-- Data for Name: channel_types; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.channel_types (id, name) VALUES (1, 'text');
+INSERT INTO public.channel_types (id, name) VALUES (2, 'voice');
+
+
+--
+-- TOC entry 3389 (class 0 OID 16460)
+-- Dependencies: 216
+-- Data for Name: channels; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+--
+-- TOC entry 3385 (class 0 OID 16422)
+-- Dependencies: 212
+-- Data for Name: groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+--
+-- TOC entry 3394 (class 0 OID 16567)
+-- Dependencies: 221
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+--
+-- TOC entry 3387 (class 0 OID 16431)
+-- Dependencies: 214
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.roles (id, name) VALUES (1, 'administrator');
+INSERT INTO public.roles (id, name) VALUES (2, 'user');
+
+
+--
+-- TOC entry 3395 (class 0 OID 16595)
+-- Dependencies: 222
+-- Data for Name: sections; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+--
+-- TOC entry 3397 (class 0 OID 16608)
+-- Dependencies: 224
+-- Data for Name: statuses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.statuses (id, name) VALUES (1, 'offline');
+INSERT INTO public.statuses (id, name) VALUES (2, 'online');
+INSERT INTO public.statuses (id, name) VALUES (3, 'inactive');
+INSERT INTO public.statuses (id, name) VALUES (4, 'notdisturb');
+INSERT INTO public.statuses (id, name) VALUES (5, 'weekend');
+
+
+--
+-- TOC entry 3383 (class 0 OID 16411)
+-- Dependencies: 210
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users (id, privacy, birth_date, group_id, role_id, password_expired, email, password, first_name, last_name, phone, refresh_token, avatar, login, status_id) VALUES (2, 'allowemail, allowbirthdate, allowphone', NULL, NULL, 1, true, NULL, '$2a$14$a.8hdvpZHQ6x7pM9d7ptBOl3CZ9R1LpDvOFnIkiTiBNfsmq/dQv4y', 'Reserved','Administrator',NULL, NULL,NULL,'glade_reserved_admin', NULL);
+
+--
+-- TOC entry 3391 (class 0 OID 16469)
+-- Dependencies: 218
+-- Data for Name: visibility; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.visibility (id, name, color) VALUES (1, 'public', NULL);
+INSERT INTO public.visibility (id, name, color) VALUES (2, 'private', NULL);
+INSERT INTO public.visibility (id, name, color) VALUES (3, 'hidden', NULL);
+
+
+--
+-- TOC entry 3412 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: channel_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.channel_types_id_seq', 2, true);
+
+
+--
+-- TOC entry 3413 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: channels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.channels_id_seq', 1, false);
+
+
+--
+-- TOC entry 3414 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.group_id_seq', 2, true);
+
+
+--
+-- TOC entry 3415 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.roles_id_seq', 1, true);
+
+
+--
+-- TOC entry 3416 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: statuses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.statuses_id_seq', 5, true);
+
+
+--
+-- TOC entry 3417 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 4, true);
+
+
+--
+-- TOC entry 3418 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: visibility_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.visibility_id_seq', 3, true);
+
+
+--
+-- TOC entry 3227 (class 2606 OID 16505)
+-- Name: channel_types channel_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.channel_types
+    ADD CONSTRAINT channel_types_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3223 (class 2606 OID 16513)
+-- Name: channels channels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.channels
+    ADD CONSTRAINT channels_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3219 (class 2606 OID 16527)
+-- Name: groups group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT group_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3229 (class 2606 OID 16576)
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3221 (class 2606 OID 16438)
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3231 (class 2606 OID 16601)
+-- Name: sections sections_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sections
+    ADD CONSTRAINT sections_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3233 (class 2606 OID 16615)
+-- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.statuses
+    ADD CONSTRAINT statuses_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3217 (class 2606 OID 16560)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3225 (class 2606 OID 16476)
+-- Name: visibility visibility_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visibility
+    ADD CONSTRAINT visibility_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3241 (class 2606 OID 16577)
+-- Name: messages channel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT channel_fkey FOREIGN KEY (channel_id) REFERENCES public.channels(id) ON UPDATE SET NULL ON DELETE SET NULL;
+
+
+--
+-- TOC entry 3239 (class 2606 OID 16506)
+-- Name: channels channel_type_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.channels
+    ADD CONSTRAINT channel_type_fkey FOREIGN KEY (channel_type_id) REFERENCES public.channel_types(id) NOT VALID;
+
+
+--
+-- TOC entry 3235 (class 2606 OID 16537)
+-- Name: users group_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT group_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id) ON UPDATE SET NULL ON DELETE SET NULL NOT VALID;
+
+
+--
+-- TOC entry 3242 (class 2606 OID 16590)
+-- Name: messages reply_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT reply_fkey FOREIGN KEY (reply_to) REFERENCES public.messages(id) ON UPDATE SET NULL ON DELETE SET NULL NOT VALID;
+
+
+--
+-- TOC entry 3234 (class 2606 OID 16444)
+-- Name: users role_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT role_fkey FOREIGN KEY (role_id) REFERENCES public.roles(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3237 (class 2606 OID 16553)
+-- Name: groups role_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT role_fkey FOREIGN KEY (role_id) REFERENCES public.roles(id) ON UPDATE SET NULL ON DELETE SET NULL NOT VALID;
+
+
+--
+-- TOC entry 3240 (class 2606 OID 16602)
+-- Name: channels section_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.channels
+    ADD CONSTRAINT section_fkey FOREIGN KEY (section_id) REFERENCES public.sections(id) ON UPDATE SET NULL ON DELETE SET NULL NOT VALID;
+
+
+--
+-- TOC entry 3236 (class 2606 OID 16617)
+-- Name: users status_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT status_fkey FOREIGN KEY (status_id) REFERENCES public.statuses(id) ON UPDATE SET NULL ON DELETE SET NULL NOT VALID;
+
+
+--
+-- TOC entry 3238 (class 2606 OID 16483)
+-- Name: channels visibility_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.channels
+    ADD CONSTRAINT visibility_fkey FOREIGN KEY (visibility_id) REFERENCES public.visibility(id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 3404 (class 0 OID 0)
+-- Dependencies: 3
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres WITH GRANT OPTION;
+
+
+-- Completed on 2022-05-09 17:46:59
+
+--
+-- PostgreSQL database dump complete
+--
+
